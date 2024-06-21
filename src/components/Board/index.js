@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef } from "react";
+import { useContext, useEffect, useRef, useLayoutEffect } from "react";
 import rough from "roughjs";
 import boardContext from "../../store/board-context";
 import { TOOL_ACTION_TYPES } from "../../constants";
@@ -20,7 +20,8 @@ function Board() {
     canvas.height = window.innerHeight;
   }, []);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
+    // useLayoutEffect is used when we purly work with dom manipulating and want this to hapen simutaneously
     // main side effets to handle all types of tool drawing
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");
