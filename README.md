@@ -1,70 +1,124 @@
-# Getting Started with Create React App
+# Whiteboard Application
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Overview
 
-## Available Scripts
+This project is a whiteboard application developed using **React** and **HTML5 Canvas**. It allows users to draw, erase, and add text to a canvas with tools like freehand drawing, shapes (lines, rectangles, ellipses, arrows), and a text tool. The project was an opportunity to deepen my understanding of JavaScript, particularly in React, while also improving my skills in state management and UI design with **TailwindCSS**.
 
-In the project directory, you can run:
+## Features
 
-### `npm start`
+- **Freehand Drawing**: Draw freely on the canvas by tracking the movement of the mouse and rendering the path accordingly.
+- **Shape Tools**: Draw shapes such as lines, rectangles, ellipses, and arrows by clicking and dragging.
+- **Text Tool**: Add text to the canvas by clicking on a point and typing. The text is rendered on the canvas when the textarea loses focus.
+- **Erase Tool**: Erase elements by detecting the proximity of the mouse to drawn shapes and removing them from the canvas.
+- **Undo/Redo**: Navigate through the canvas states to undo or redo actions, maintaining a history of states.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Challenges Faced
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- **State Management**: Managing application states, especially for undo/redo functionality, was challenging due to the high frequency of state changes.
+- **Text Tool Implementation**: Implementing the text tool required a different approach compared to other tools, involving conditional rendering and focus management.
+- **Erasing Elements**: Implementing the erase tool involved complex mathematical logic to detect and remove elements based on their proximity to the mouse pointer.
 
-### `npm test`
+## Lessons Learned
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- **Deep Dive into JavaScript & React**: The project enhanced my knowledge of React, particularly in managing complex state scenarios.
+- **Problem-Solving**: The challenges encountered pushed me to find creative and efficient solutions, improving my problem-solving skills.
+- **TailwindCSS**: I learned to use TailwindCSS for styling, which streamlined the process of designing UI components.
 
-### `npm run build`
+## Areas for Improvement
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- **State Management**: While React's Context API was used for state management, **Redux** might have been a better choice due to the high frequency of state changes.
+- **Element Manipulation**: Currently, the application lacks the ability to select and manipulate existing elements, such as deleting or moving them after they've been drawn. This is a feature I plan to implement in the future.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Implementation Details
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Undo/Redo Functionality
 
-### `npm run eject`
+Undo and redo were conceptualized as navigating through a sequence of canvas states. Two states were used:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- **history**: Stores each state of the canvas.
+- **index**: Indicates the current position in the history.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Every time a new element is added, it’s pushed into the history array, updating the sequence of states. Undoing an action involves setting the current canvas elements to `history[index]` and decrementing the index. Redoing is achieved by incrementing the index.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Erasing Functionality
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Erasing was implemented by detecting the proximity of the mouse pointer to drawn elements. The proximity was determined using the coordinates of the drawn elements, stored immediately after they are drawn. When the mouse pointer is detected within a certain range, the respective element is identified and removed.
 
-## Learn More
+### Text Tool
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+The text tool allows users to click on the canvas and immediately start typing. A textarea appears at the clicked position, and once the text input loses focus, it is rendered onto the canvas using HTML5 Canvas methods.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Freehand Drawing and Shapes
 
-### Code Splitting
+- **Freehand Drawing**: Tracks the entire movement of the mouse, capturing a series of coordinates to create a path, which is then drawn onto the canvas.
+- **Shapes**: For shapes like lines and rectangles, two key points are recorded (mousedown and mouseup events), and the respective shapes are drawn using these coordinates.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Project Structure
 
-### Analyzing the Bundle Size
+```bash
+.
+├── node_modules/
+├── public/
+├── src/
+│   ├── components/
+│   │   ├── Board/
+│   │   │   ├── index.js
+│   │   │   └── index.module.css
+│   │   ├── Toolbar/
+│   │   │   ├── index.js
+│   │   │   └── index.module.css
+│   │   ├── Toolbox/
+│   │   │   ├── index.js
+│   │   │   └── index.module.css
+│   ├── store/
+│   │   ├── board-context.js
+│   │   ├── BoardProvider.js
+│   │   ├── toolbox-context.js
+│   │   └── ToolboxProvider.js
+│   ├── utils/
+│   │   ├── element.js
+│   │   └── maths.js
+│   ├── App.js
+│   ├── constants.js
+│   ├── index.css
+│   ├── index.js
+│   └── App.css
+├── .gitignore
+├── package-lock.json
+├── package.json
+├── README.md
+└── tailwind.config.js
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Installation
 
-### Making a Progressive Web App
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/Mayank-Raj3/WhiteBoard.git
+   ```
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
+3. **Start the application**:
+   ```bash
+   npm start
+   ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## Future Plans
 
-### Advanced Configuration
+- **Implementing Redux**: Consider switching to Redux for better state management.
+- **Element Manipulation**: Add features to select, move, and delete existing elements on the canvas.
+- **Performance Optimization**: Optimize the application for better performance with large canvases and complex drawings.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## Contributing
 
-### Deployment
+If you would like to contribute to this project, feel free to fork the repository and submit a pull request. Any suggestions for improving the application are welcome!
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## License
 
-### `npm run build` fails to minify
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---
+
+**Happy Drawing!** 🎨

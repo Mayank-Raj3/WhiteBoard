@@ -1,15 +1,15 @@
-import React from "react";
 import Board from "./components/Board";
 import Toolbar from "./components/Toolbar";
-import BoardProvider from "./store/BoardProvider";
-import ToolboxProvider from "./store/ToolBoxProvider";
 import Toolbox from "./components/Toolbox";
+import BoardProvider from "./store/BoardProvider";
+import ToolboxProvider from "./store/ToolboxProvider";
+
 function App() {
   return (
     <BoardProvider>
       <ToolboxProvider>
-        <Board />
         <Toolbar />
+        <Board />
         <Toolbox />
       </ToolboxProvider>
     </BoardProvider>
