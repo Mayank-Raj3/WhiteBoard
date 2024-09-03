@@ -52,7 +52,7 @@ const initialToolboxState = {
   },
 };
 
-const ToolboxProvider = ({ children }) => {
+const ToolBxProvider = ({ children }) => {
   const [toolboxState, dispatchToolboxAction] = useReducer(
     toolboxReducer,
     initialToolboxState
@@ -102,4 +102,4 @@ const ToolboxProvider = ({ children }) => {
   );
 };
 
-export default ToolboxProvider;
+export default ToolBxProvider;
